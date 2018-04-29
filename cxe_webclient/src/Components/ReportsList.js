@@ -1,34 +1,78 @@
 import React, { Component } from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import ReportRow from './ReportRow';
 
 class ReportsList extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      reports: [
+        {
+          'note': 'This is first report',
+          'department': {
+            'server_id': '',
+            'title': 'Electrical'
+          },
+          'location': {
+            'specifics': {
+              'Terminal': 'E',
+              'Gate': '1'
+            },
+            'gps': {
+              'latitude': 51.50998,
+              'longitude': -0.1337
+            }
+          },
+          'dateSubmitted': '2018-04-29T04:05:55.468Z',
+          'problemType': {
+            'server_id': 'i11',
+            'title': 'ATM Broken'
+          }
+        },
+        {
+          'note': 'This is another report',
+          'department': {
+            'server_id': '',
+            'title': 'Cleaning'
+          },
+          'location': {
+            'specifics': {
+              'Terminal': 'C',
+              'Gate': '1'
+            },
+            'gps': {
+              'latitude': 51.51998,
+              'longitude': -0.1237
+            }
+          },
+          'dateSubmitted': '2018-04-29T03:43:42.468Z',
+          'problemType': {
+            'server_id': 'i11',
+            'title': 'Ice Cream Spill'
+          }
+        },
+      ],
+    };
+  }
+
+  getReports() {
+  }
+
   render() {
+    const reports = this.state.reports;
+    const reportDivs = [];
+    for (let reportIndex in reports) {
+      reportDivs.push(
+        <ReportRow report={reports[reportIndex]}>
+        </ReportRow>
+      );
+    }
     return (
-      <Nav stacked style={{'backgroundColor': 'Gainsboro'}}>
-        <NavItem style={{'backgroundColor': 'red'}}>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-        <NavItem>
-          Hello
-        </NavItem>
-      </Nav>
-    )
+      <ListGroup>
+        {reportDivs}
+      </ListGroup>
+    );
   }
 }
 
-export default ReportsList
+export default ReportsList;

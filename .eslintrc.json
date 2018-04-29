@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-var": "error",
+    "no-console": "off",
+    "prefer-arrow-callback": "error",
+    "indent": [
+        "error",
+        2
+    ],
+    "linebreak-style": [
+        "error",
+        "unix"
+    ],
+    "semi": [
+        "error",
+        "always"
+    ],
+    "quotes": [1, "single"]
+  }
+}

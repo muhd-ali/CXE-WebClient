@@ -6,6 +6,10 @@ import RightBar from './Components/RightBar';
 import ReportsList from './Components/ReportsList';
 
 class App extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
   render() {
     return (
       <Router>
