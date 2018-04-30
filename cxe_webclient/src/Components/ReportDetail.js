@@ -64,9 +64,7 @@ class ReportDetail extends Component {
               {this.state.report.location.specifics.Gate}
             </ListGroupItem>
             <ListGroupItem header='Note'>
-              <p>
-                {this.state.report.note}
-              </p>
+              {this.state.report.note}
             </ListGroupItem>
           </ListGroup>
         </Modal.Body>
