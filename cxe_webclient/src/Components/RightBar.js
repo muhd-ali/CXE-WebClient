@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, Col } from 'react-bootstrap';
+import { Provider } from 'react-redux';
+
 class RightBar extends Component {
   render() {
     const ListView = this.props.listView
@@ -12,8 +14,10 @@ class RightBar extends Component {
             </Panel.Title>
           </Panel.Heading>
           <Panel.Body style={{'max-height': 'calc(100vh - 250px)', 'overflow-y': 'auto'}}>
-            <ListView>
-            </ListView>
+            <Provider store={this.props.store}>
+              <ListView>
+              </ListView>
+            </Provider>
           </Panel.Body>
         </Panel>
       </Col>

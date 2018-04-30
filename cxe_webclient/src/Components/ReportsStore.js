@@ -54,23 +54,25 @@ const initialState = {
 };
 
 function reportsReducer(state = initialState, action) {
+  const newState = Object.assign({}, state);
   switch (action.type) {
     case 'HIDE_DETAIL': {
       const index = action.payload;
-      state = Object.assign({}, state);
-      state.visibility[index] = false;
-      console.log('hide detail');
+      newState.visibility[index] = false;
       break;
     }
     case 'SHOW_DETAIL': {
       const index = action.payload;
-      state = Object.assign({}, state);
-      state.visibility[index] = true;
-      console.log('show detail');
+      newState.visibility[index] = true;
+      break;
+    }
+    case 'ADD_REPORT': {
+      const report = action.payload;
+      newState.reports.push(report);
       break;
     }
   }
-  return state;
+  return newState;
 }
 
 export const store = createStore(
@@ -96,6 +98,12 @@ export function mapDispatchToProps(dispatch) {
       dispatch({
         type: 'HIDE_DETAIL',
         payload: reportIndex,
+      });
+    },
+    addReport: (report) => {
+      dispatch({
+        type: 'ADD_REPORT',
+        payload: report,
       });
     },
   };

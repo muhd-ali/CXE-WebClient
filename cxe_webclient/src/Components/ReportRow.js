@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { ListGroupItem, Row, Col } from 'react-bootstrap';
 import ReportDetail from './ReportDetail';
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from './ReportsStore';
+
 class ReportRow extends Component {
   constructor(props, context) {
     super(props, context);
     const self = this;
-    const report = props.reportsReducer.reports[props.index];
-    const visibility = props.reportsReducer.visibility[props.index];
     this.state = {
-      report: report,
-      timePassed: self.getTimePassedStringSinceDateSubmittedFor(report),
-      detailVisible: visibility,
+      timePassed: self.getTimePassedStringSinceDateSubmittedFor(props.report),
     };
     this.runSeconds();
   }
@@ -34,7 +29,7 @@ class ReportRow extends Component {
   runSeconds() {
     const self = this;
     setTimeout(() => {
-      const timePassed = self.getTimePassedStringSinceDateSubmittedFor(self.state.report);
+      const timePassed = self.getTimePassedStringSinceDateSubmittedFor(self.props.report);
       this.setState({
         timePassed: timePassed,
       });
@@ -48,7 +43,7 @@ class ReportRow extends Component {
 
   getBackgroundColor() {
     const MAX_LIMIT_MINUTES = 60;
-    let timePassed_minutes = this.getTimePassedInMilliSecondsSinceDateSubmittedFor(this.state.report)/1000/60;
+    let timePassed_minutes = this.getTimePassedInMilliSecondsSinceDateSubmittedFor(this.props.report)/1000/60;
     timePassed_minutes = timePassed_minutes > MAX_LIMIT_MINUTES ? MAX_LIMIT_MINUTES : timePassed_minutes;
     const col = 255 * (timePassed_minutes / MAX_LIMIT_MINUTES);
     const normalColor = [col, 255 - col, 255 - col];
@@ -57,11 +52,11 @@ class ReportRow extends Component {
   }
 
   render() {
-    const report = this.props.reportsReducer.reports[this.props.index];
+    const report = this.props.report;
     const backgroundColor = this.getBackgroundColor();
     return (
       <div>
-        <ReportDetail onHide={() => this.props.hideDetail(this.props.index)} visible={this.props.reportsReducer.visibility[this.props.index]} report={report}></ReportDetail>
+        <ReportDetail onHide={() => this.props.hideDetail(this.props.index)} visible={this.props.visible} report={report}></ReportDetail>
         <ListGroupItem onClick={() => this.props.showDetail(this.props.index)} style={{'backgroundColor': backgroundColor}}>
           <Row>
             <Col xs={8} md={8}>
@@ -88,4 +83,4 @@ class ReportRow extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReportRow);
+export default ReportRow;

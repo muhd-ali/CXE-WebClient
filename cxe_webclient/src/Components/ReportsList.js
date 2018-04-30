@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import ReportRow from './ReportRow';
-import { store } from './ReportsStore';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './ReportsStore';
 
 class ReportsList extends Component {
   constructor(props, context) {
@@ -61,14 +61,18 @@ class ReportsList extends Component {
   }
 
   render() {
-    const reports = this.state.reports;
+    const state = this.props.reportsReducer;
     const reportDivs = [];
-    for (let reportIndex in reports) {
+    for (let reportIndex in state.reports) {
       reportDivs.push(
-        <Provider store={store}>
-          <ReportRow index={reportIndex}>
-          </ReportRow>
-        </Provider>
+        <ReportRow
+          showDetail={this.props.showDetail}
+          hideDetail={this.props.hideDetail}
+          index={reportIndex}
+          report={state.reports[reportIndex]}
+          visible={state.visibility[reportIndex]}
+        >
+        </ReportRow>
       );
     }
     return (
@@ -79,4 +83,4 @@ class ReportsList extends Component {
   }
 }
 
-export default ReportsList;
+export default connect(mapStateToProps, mapDispatchToProps)(ReportsList);
