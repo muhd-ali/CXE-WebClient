@@ -13,7 +13,7 @@ class RightBar extends Component {
               {this.props.title}
             </Panel.Title>
           </Panel.Heading>
-          <Panel.Body style={{'max-height': 'calc(100vh - 250px)', 'overflow-y': 'auto'}}>
+          <Panel.Body style={{'maxHeight': 'calc(100vh - 250px)', 'overflowY': 'auto'}}>
             <Provider store={this.props.store}>
               <ListView>
               </ListView>

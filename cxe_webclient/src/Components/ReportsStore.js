@@ -69,8 +69,11 @@ function reportsReducer(state = initialState, action) {
     case 'ADD_REPORT': {
       const report = action.payload;
       newState.reports.push(report);
+      newState.visibility.push(false);
       break;
     }
+    default:
+      break;
   }
   return newState;
 }

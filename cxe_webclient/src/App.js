@@ -7,10 +7,6 @@ import ReportsList from './Components/ReportsList';
 import { store as ReportsStore } from './Components/ReportsStore';
 
 class App extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   render() {
     return (
       <Router>

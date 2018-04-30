@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ListGroup, ListGroupItem, Button, Modal, Row, Col} from 'react-bootstrap';
+import {ListGroup, ListGroupItem, Button, Modal} from 'react-bootstrap';
 
 class ReportDetail extends Component {
   constructor(props, context) {
@@ -39,36 +39,42 @@ class ReportDetail extends Component {
   }
 
   render() {
-    return (<Modal show={this.props.visible} onHide={this.modalClose}>
-      <Modal.Header closeButton="closeButton">
-        <Modal.Title>
-          Report Summary
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <ListGroup>
-          <ListGroupItem header='Problem Type'>
-            {this.state.report.problemType.title}
-          </ListGroupItem>
-          <ListGroupItem header='Department'>
-            {this.state.report.department.title}
-          </ListGroupItem>
-          <ListGroupItem header='Location'>
-            <b>Terminal: </b> {this.state.report.location.specifics.Terminal}
-            <br/>
-            <b>Gate: </b> {this.state.report.location.specifics.Gate}
-          </ListGroupItem>
-          <ListGroupItem header='Note'>
-            <p>
-              {this.state.report.note}
-            </p>
-          </ListGroupItem>
-        </ListGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="primary" onClick={this.modalClose}>Close</Button>
-      </Modal.Footer>
-    </Modal>);
+    return (
+      <Modal show={this.props.visible} onHide={this.modalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Report Summary
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ListGroup>
+            <ListGroupItem header='Problem Type'>
+              {this.state.report.problemType.title}
+            </ListGroupItem>
+            <ListGroupItem header='Department'>
+              {this.state.report.department.title}
+            </ListGroupItem>
+            <ListGroupItem header='Location'>
+              <b>Terminal:
+              </b>
+              {this.state.report.location.specifics.Terminal}
+              <br/>
+              <b>Gate:
+              </b>
+              {this.state.report.location.specifics.Gate}
+            </ListGroupItem>
+            <ListGroupItem header='Note'>
+              <p>
+                {this.state.report.note}
+              </p>
+            </ListGroupItem>
+          </ListGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="primary" onClick={this.modalClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+  );
   }
 }
 

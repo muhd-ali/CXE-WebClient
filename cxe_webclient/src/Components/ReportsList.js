@@ -68,6 +68,7 @@ class ReportsList extends Component {
         <ReportRow
           showDetail={this.props.showDetail}
           hideDetail={this.props.hideDetail}
+          key={reportIndex}
           index={reportIndex}
           report={state.reports[reportIndex]}
           visible={state.visibility[reportIndex]}
