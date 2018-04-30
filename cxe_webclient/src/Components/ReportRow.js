@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { ListGroupItem, Row, Col } from 'react-bootstrap';
-import ReportDetail from './ReportDetail'
-
+import ReportDetail from './ReportDetail';
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './ReportsStore';
 class ReportRow extends Component {
   constructor(props, context) {
     super(props, context);
     const self = this;
-    this.viewDetail = this.viewDetail.bind(this);
+    const report = props.reportsReducer.reports[props.index];
+    const visibility = props.reportsReducer.visibility[props.index];
     this.state = {
-      report: props.report,
-      timePassed: self.getTimePassedStringSinceDateSubmittedFor(props.report),
-      detailVisible: false,
+      report: report,
+      timePassed: self.getTimePassedStringSinceDateSubmittedFor(report),
+      detailVisible: visibility,
     };
     this.runSeconds();
   }
@@ -54,20 +56,13 @@ class ReportRow extends Component {
     return this.getRGBStringFrom(newColor);
   }
 
-  viewDetail() {
-    console.log('detail visible');
-    this.setState({
-      detailVisible: true,
-    });
-  }
-
   render() {
-    const report = this.state.report;
+    const report = this.props.reportsReducer.reports[this.props.index];
     const backgroundColor = this.getBackgroundColor();
     return (
       <div>
-        <ReportDetail visible={this.state.detailVisible} report={report}></ReportDetail>
-        <ListGroupItem onClick={this.viewDetail} style={{'backgroundColor': backgroundColor}}>
+        <ReportDetail onHide={() => this.props.hideDetail(this.props.index)} visible={this.props.reportsReducer.visibility[this.props.index]} report={report}></ReportDetail>
+        <ListGroupItem onClick={() => this.props.showDetail(this.props.index)} style={{'backgroundColor': backgroundColor}}>
           <Row>
             <Col xs={8} md={8}>
               <b>
@@ -93,4 +88,4 @@ class ReportRow extends Component {
   }
 }
 
-export default ReportRow;
+export default connect(mapStateToProps, mapDispatchToProps)(ReportRow);

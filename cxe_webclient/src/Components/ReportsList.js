@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import ReportRow from './ReportRow';
+import { store } from './ReportsStore';
+import { Provider } from 'react-redux';
 
 class ReportsList extends Component {
   constructor(props, context) {
@@ -63,8 +65,10 @@ class ReportsList extends Component {
     const reportDivs = [];
     for (let reportIndex in reports) {
       reportDivs.push(
-        <ReportRow report={reports[reportIndex]}>
-        </ReportRow>
+        <Provider store={store}>
+          <ReportRow index={reportIndex}>
+          </ReportRow>
+        </Provider>
       );
     }
     return (
