@@ -55,11 +55,11 @@ class ReportDetail extends Component {
               {this.state.report.department.title}
             </ListGroupItem>
             <ListGroupItem header='Location'>
-              <b>Terminal:
+              <b>Terminal:{' '}
               </b>
               {this.state.report.location.specifics.Terminal}
               <br/>
-              <b>Gate:
+              <b>Gate:{' '}
               </b>
               {this.state.report.location.specifics.Gate}
             </ListGroupItem>

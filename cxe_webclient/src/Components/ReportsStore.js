@@ -4,52 +4,7 @@ import {
 } from 'redux';
 
 const initialState = {
-  reports: [
-    {
-      'note': 'This is first report',
-      'department': {
-        'server_id': '',
-        'title': 'Electrical'
-      },
-      'location': {
-        'specifics': {
-          'Terminal': 'E',
-          'Gate': '1'
-        },
-        'gps': {
-          'latitude': 51.50998,
-          'longitude': -0.1337
-        }
-      },
-      'dateSubmitted': '2018-04-29T04:05:55.468Z',
-      'problemType': {
-        'server_id': 'i11',
-        'title': 'ATM Broken'
-      }
-    },
-    {
-      'note': 'This is another report',
-      'department': {
-        'server_id': '',
-        'title': 'Cleaning'
-      },
-      'location': {
-        'specifics': {
-          'Terminal': 'C',
-          'Gate': '1'
-        },
-        'gps': {
-          'latitude': 51.51998,
-          'longitude': -0.1237
-        }
-      },
-      'dateSubmitted': '2018-04-29T03:43:42.468Z',
-      'problemType': {
-        'server_id': 'i11',
-        'title': 'Ice Cream Spill'
-      }
-    },
-  ],
+  reports: [],
   visibility: new Array(2).fill(false),
 };
 
@@ -66,9 +21,15 @@ function reportsReducer(state = initialState, action) {
       newState.visibility[index] = true;
       break;
     }
-    case 'ADD_REPORT': {
+    case 'NEW_REPORT': {
       const report = action.payload;
       newState.reports.push(report);
+      newState.visibility.push(false);
+      break;
+    }
+    case 'ALL_REPORTS': {
+      const reports = action.payload.pending;
+      newState.reports = reports;
       newState.visibility.push(false);
       break;
     }
@@ -101,12 +62,6 @@ export function mapDispatchToProps(dispatch) {
       dispatch({
         type: 'HIDE_DETAIL',
         payload: reportIndex,
-      });
-    },
-    addReport: (report) => {
-      dispatch({
-        type: 'ADD_REPORT',
-        payload: report,
       });
     },
   };

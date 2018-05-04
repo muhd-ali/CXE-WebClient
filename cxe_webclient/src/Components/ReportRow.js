@@ -42,7 +42,7 @@ class ReportRow extends Component {
   }
 
   getBackgroundColor() {
-    const MAX_LIMIT_MINUTES = 60;
+    const MAX_LIMIT_MINUTES = 5;
     let timePassed_minutes = this.getTimePassedInMilliSecondsSinceDateSubmittedFor(this.props.report)/1000/60;
     timePassed_minutes = timePassed_minutes > MAX_LIMIT_MINUTES ? MAX_LIMIT_MINUTES : timePassed_minutes;
     const col = 255 * (timePassed_minutes / MAX_LIMIT_MINUTES);
