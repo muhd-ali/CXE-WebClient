@@ -5,23 +5,29 @@ import ReportDetail from './ReportDetail';
 class ReportRow extends Component {
   constructor(props, context) {
     super(props, context);
-    const self = this;
+    let referenceDate;
+    if (props.status === 'pending') {
+      referenceDate = props.report.dateSubmitted;
+    } else if (props.status === 'assigned') {
+      referenceDate = props.report.dateAssigned;
+    }
+    this.referenceDate = referenceDate;
     this.state = {
-      timePassed: self.getTimePassedStringSinceDateSubmittedFor(props.report),
+      timePassed: this.getTimePassedStringSince(this.referenceDate),
     };
     this.runSeconds();
   }
 
-  getTimePassedInMilliSecondsSinceDateSubmittedFor(report) {
+  getTimePassedInMilliSecondsSince(dateString) {
     const dateNow = new Date();
-    const dateSubmitted = new Date(report.dateSubmitted);
-    const timePassed = dateNow - dateSubmitted;
+    const date = new Date(dateString);
+    const timePassed = dateNow - date;
     return timePassed;
   }
 
-  getTimePassedStringSinceDateSubmittedFor(report) {
+  getTimePassedStringSince(dateString) {
     const timePassed = new Date(
-      this.getTimePassedInMilliSecondsSinceDateSubmittedFor(report)
+      this.getTimePassedInMilliSecondsSince(dateString)
     ).toISOString().slice(11,19);
     return timePassed;
   }
@@ -29,7 +35,7 @@ class ReportRow extends Component {
   runSeconds() {
     const self = this;
     setTimeout(() => {
-      const timePassed = self.getTimePassedStringSinceDateSubmittedFor(self.props.report);
+      const timePassed = self.getTimePassedStringSince(self.referenceDate);
       this.setState({
         timePassed: timePassed,
       });
@@ -42,13 +48,12 @@ class ReportRow extends Component {
   }
 
   getBackgroundColor() {
-    const MAX_LIMIT_MINUTES = 5;
-    let timePassed_minutes = this.getTimePassedInMilliSecondsSinceDateSubmittedFor(this.props.report)/1000/60;
+    const MAX_LIMIT_MINUTES = 60;
+    let timePassed_minutes = this.getTimePassedInMilliSecondsSince(this.referenceDate)/1000/60;
     timePassed_minutes = timePassed_minutes > MAX_LIMIT_MINUTES ? MAX_LIMIT_MINUTES : timePassed_minutes;
     const col = 255 * (timePassed_minutes / MAX_LIMIT_MINUTES);
-    const normalColor = [col, 255 - col, 255 - col];
-    const newColor = normalColor;
-    return this.getRGBStringFrom(newColor);
+    const newColor = [255, 255 - col, 255 - col];
+    return this.getRGBStringFrom([newColor]);
   }
 
   render() {
@@ -56,8 +61,8 @@ class ReportRow extends Component {
     const backgroundColor = this.getBackgroundColor();
     return (
       <div>
-        <ReportDetail onHide={() => this.props.hideDetail(this.props.index)} visible={this.props.visible} report={report}></ReportDetail>
-        <ListGroupItem onClick={() => this.props.showDetail(this.props.index)} style={{'backgroundColor': backgroundColor}}>
+        <ReportDetail onHide={() => this.props.hideDetail(this.props.status)(this.props.index)} report={report}></ReportDetail>
+        <ListGroupItem onClick={() => this.props.showDetail(this.props.status)(this.props.index)} style={{'backgroundColor': backgroundColor, 'color': 'black'}}>
           <Row>
             <Col xs={8} md={8}>
               <b>

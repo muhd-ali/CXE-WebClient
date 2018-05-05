@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 export class ServerCommunicator {
   constructor(reportsStore) {
-    this.reportsStore = reportsStore
+    this.reportsStore = reportsStore;
     this.socket = io('http://localhost:8000/webClientSocketIO');
     this.addSocketEvents();
   }

@@ -40,7 +40,7 @@ class ReportDetail extends Component {
 
   render() {
     return (
-      <Modal show={this.props.visible} onHide={this.modalClose}>
+      <Modal show={this.state.report.isDetailVisible} onHide={this.modalClose}>
         <Modal.Header closeButton>
           <Modal.Title>
             Report Summary

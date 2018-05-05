@@ -4,33 +4,54 @@ import {
 } from 'redux';
 
 const initialState = {
-  reports: [],
-  visibility: new Array(2).fill(false),
+  reports: {
+    'pending': [],
+    'assigned': [],
+  },
 };
 
 function reportsReducer(state = initialState, action) {
   const newState = Object.assign({}, state);
   switch (action.type) {
-    case 'HIDE_DETAIL': {
+    case 'HIDE_DETAIL_PENDING': {
       const index = action.payload;
-      newState.visibility[index] = false;
+      newState.reports.pending[index].isDetailVisible = false;
       break;
     }
-    case 'SHOW_DETAIL': {
+    case 'SHOW_DETAIL_PENDING': {
       const index = action.payload;
-      newState.visibility[index] = true;
+      newState.reports.pending[index].isDetailVisible = true;
+      break;
+    }
+    case 'HIDE_DETAIL_ASSIGNED': {
+      const index = action.payload;
+      newState.reports.assigned[index].isDetailVisible = false;
+      break;
+    }
+    case 'SHOW_DETAIL_ASSIGNED': {
+      const index = action.payload;
+      newState.reports.assigned[index].isDetailVisible = true;
       break;
     }
     case 'NEW_REPORT': {
       const report = action.payload;
-      newState.reports.push(report);
-      newState.visibility.push(false);
+      newState.reports.pending.push(report);
       break;
     }
     case 'ALL_REPORTS': {
-      const reports = action.payload.pending;
+      const reports = action.payload;
+      for (let status in reports) {
+        const reportsWithStatus = reports[status];
+        reportsWithStatus.forEach(r => {
+          r.isDetailVisible = false;
+        });
+      }
       newState.reports = reports;
-      newState.visibility.push(false);
+      break;
+    }
+    case 'REPORT_ASSIGNED': {
+      // const reportID = action.payload;
+      // newState.reports = reports;
       break;
     }
     default:
@@ -52,15 +73,41 @@ export function mapStateToProps(state) {
 }
 export function mapDispatchToProps(dispatch) {
   return {
-    showDetail: (reportIndex) => {
+    showDetail: (category) => (reportIndex) => {
+      let type = '';
+      switch (category) {
+        case 'pending': {
+          type = 'SHOW_DETAIL_PENDING';
+          break;
+        }
+        case 'assigned': {
+          type = 'SHOW_DETAIL_ASSIGNED';
+          break;
+        }
+        default:
+          break;
+      }
       dispatch({
-        type: 'SHOW_DETAIL',
+        type: type,
         payload: reportIndex,
       });
     },
-    hideDetail: (reportIndex) => {
+    hideDetail: (category) => (reportIndex) => {
+      let type = '';
+      switch (category) {
+        case 'pending': {
+          type = 'HIDE_DETAIL_PENDING';
+          break;
+        }
+        case 'assigned': {
+          type = 'HIDE_DETAIL_ASSIGNED';
+          break;
+        }
+        default:
+          break;
+      }
       dispatch({
-        type: 'HIDE_DETAIL',
+        type: type,
         payload: reportIndex,
       });
     },
