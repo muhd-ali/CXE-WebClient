@@ -37,10 +37,20 @@ export class ServerCommunicator {
     });
   }
 
+  addReportAssignedEvent() {
+    this.socket.on('reportAssigned', report => {
+      this.reportsStore.dispatch({
+        type: 'REPORT_ASSIGNED',
+        payload: report,
+      });
+    });
+  }
+
   addSocketEvents() {
     this.addSocketConnectEvent();
     this.addSocketDisconnectEvent();
     this.addNewReportEvent();
     this.addAllReportsEvent();
+    this.addReportAssignedEvent();
   }
 }

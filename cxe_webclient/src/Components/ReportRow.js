@@ -36,9 +36,7 @@ class ReportRow extends Component {
     const self = this;
     setTimeout(() => {
       const timePassed = self.getTimePassedStringSince(self.referenceDate);
-      this.setState({
-        timePassed: timePassed,
-      });
+      self.setState({timePassed: timePassed});
       self.runSeconds();
     }, 1000);
   }

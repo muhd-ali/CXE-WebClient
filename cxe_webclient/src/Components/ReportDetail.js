@@ -33,7 +33,7 @@ class ReportDetail extends Component {
     const self = this;
     setTimeout(() => {
       const timePassed = self.getTimePassedStringSinceDateSubmittedFor(self.state.report);
-      this.setState({timePassed: timePassed});
+      self.setState({timePassed: timePassed});
       self.runSeconds();
     }, 1000);
   }

@@ -50,8 +50,16 @@ function reportsReducer(state = initialState, action) {
       break;
     }
     case 'REPORT_ASSIGNED': {
-      // const reportID = action.payload;
-      // newState.reports = reports;
+      const report = action.payload;
+      const pending = newState.reports.pending;
+      let index;
+      for (let i in pending) {
+        if (pending[i].id === report.id) {
+          index = i;
+        }
+      }
+      pending.splice(index, 1);
+      newState.reports.assigned.push(report);
       break;
     }
     default:
